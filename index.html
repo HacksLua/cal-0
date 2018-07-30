@@ -1,0 +1,88 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>--------</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" />
+    <link href="style/ng-notify-custom.css" rel="stylesheet" />
+    <link href="style/site.css" rel="stylesheet" />
+
+    <link href="style/customLoadinBar.css" rel="stylesheet" />
+
+</head>
+<body ng-app="eventsApp" ng-controller="mainCtrl">
+
+    <div class="main ng-cloak" ng-cloak style="min-height: 93vh">
+        <div style="margin:0 auto; position:absolute; top:40%;left:50%; margin-left:-3%" ng-show="!currentUser">
+            <h3 style="margin:0 auto; margin-left:-100%;padding-left:10px" class="text-center">Welcome to Google Events Manager</h3>
+            <br />
+            <button class="btn btn-primary"  ng-click="login()" style="margin-left:-100px;"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp;Login with Google Account</button>
+            <h6 style="margin:0 auto; margin-left:-100%; padding-left:15px" class="text-center"> Note: &nbsp; &nbsp; &nbsp; Allow pop-ups for auto login</h6>
+        </div>
+        <div class="container-fluid" ng-show="currentUser">
+            <div style="padding:0 0 15px 0;border-bottom-style:solid;border-width:thin;border-color:lightgray" >
+                <h3>Welcome {{currentUser.displayName}}!</h3>
+                <img ng-src="{{currentUser.image.url.replace('sz=50','sz=100')}}" class="img-circle" alt="Google plus photo" style="margin-right:50px; margin-bottom:10px">
+                <div style="display:inline-block; ">
+                    <p style="display:inline-block">Email: {{currentUser.emails[0].value}}</p>
+                    <br>
+                    <a href="" ng-href="{{currentUser.url}}" style="display:inline-block" placeholder="Google+ url" target="_blank"> Google+ Account</a>
+                </div>
+            </div>
+            <br />
+            <div style="border-bottom-style:solid;border-width:thin;border-color:lightgray">
+
+                <div class="input-group"  ng-show="currentUser" style="width:60%;float:left; margin-right:10px;margin-bottom:10px">
+                    <span class="input-group-addon" id="basic-addon1" >Choose calendar:</span>
+                    <select class="form-control" id="selectCalendar" name="calendar" ng-model="selectedCalendar" ng-options="cal as cal.summary for cal in calendars" ng-change="loadEvents()"></select>
+                    
+                </div>
+                <button type="button" class="btn btn-primary"  aria-label="Left Align" data-toggle='modal' data-target='#addEventModal' ng-click="resetAddForm()">
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true" ></span>Add new event
+                </button>
+                <br>
+                <br>
+                
+
+            </div>
+            <br />
+            <div ng-show="currentUser">
+                <tree-grid tree-data="tree_data" tree-control="my_tree" col-defs="col_defs" expand-on="expanding_property" on-select="my_tree_handlerCV(branch)" expand-level="1" icon-expand="glyphicon glyphicon-chevron-right" icon-collapse="glyphicon glyphicon-chevron-down" icon-leaf="glyphicon glyphicon-globe"></tree-grid>
+            </div>
+            <br />
+            <br />
+            <div ng-include="'views/viewEventModal.html'"></div>
+            <div ng-include="'views/editEventModal.html'"></div>
+            <div ng-include="'views/addEventModal.html'"></div>
+            <div ng-include="'views/deleteEventModal.html'"></div>
+
+        </div>
+    </div>
+    <div class="footer" style=" border-bottom-style:solid;border-top-style:solid; border-width:thin;border-color:lightgray; padding-top:5px" >
+        <div class="container">
+            <div class="row">
+                <div class="text-center">
+                    <div class="design">
+                        <p href="#" style="display:inline-block"> ©Hacks Lua </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="scripts/angular.js"></script>
+    <script src="scripts/angular-googleapi.js"></script>
+    <script src="https://apis.google.com/js/client.js"></script>
+    <script src="scripts/tree-grid-directive.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="scripts/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ng-notify/0.8.0/ng-notify.min.js"></script>
+    <script type='text/javascript' src='//cdnjs.cloudflare.com/ajax/libs/angular-loading-bar/0.9.0/loading-bar.min.js'></script>
+    <script src="app/app.js?v=2"></script>
+    <script src="app/controllers/mainController.js"></script>
+
+</body>
+</html>
